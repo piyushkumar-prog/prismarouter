@@ -1,0 +1,55 @@
+{
+  "name": "@psr/governor",
+  "version": "0.1.0",
+  "description": "Per-tenant concurrency cap and fair queueing",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:run": "vitest run",
+    "clean": "rimraf dist",
+    "prepublishOnly": "pnpm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "prisma",
+    "multi-tenant",
+    "concurrency",
+    "backpressure",
+    "postgresql"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piyushkumar-prog/prisma-schema-router.git",
+    "directory": "packages/governor"
+  },
+  "homepage": "https://github.com/piyushkumar-prog/prisma-schema-router#readme",
+  "bugs": {
+    "url": "https://github.com/piyushkumar-prog/prisma-schema-router/issues"
+  },
+  "author": "Piyush Kumar (https://github.com/piyushkumar-prog) and Shivanghi Sharma (https://github.com/shivanghi-sharma)",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,71 @@
+{
+  "name": "@psr/core",
+  "version": "0.1.0",
+  "description": "Router, context, client cache, guard, registry interface",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "clean": "rimraf dist",
+    "prepublishOnly": "pnpm run build"
+  },
+  "peerDependencies": {
+    "@prisma/adapter-pg": ">=5.0.0",
+    "@prisma/client": ">=5.0.0",
+    "@psr/governor": "workspace:^",
+    "pg": ">=8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@psr/governor": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/pg": "^8.11.6",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "prisma",
+    "multi-tenant",
+    "schema-per-tenant",
+    "postgresql",
+    "postgres",
+    "saas",
+    "isolation",
+    "async-local-storage"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piyushkumar-prog/prisma-schema-router.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/piyushkumar-prog/prisma-schema-router#readme",
+  "bugs": {
+    "url": "https://github.com/piyushkumar-prog/prisma-schema-router/issues"
+  },
+  "author": "Piyush Kumar (https://github.com/piyushkumar-prog) and Shivanghi Sharma (https://github.com/shivanghi-sharma)",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

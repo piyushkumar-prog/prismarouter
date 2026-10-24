@@ -1,0 +1,116 @@
+name: Bug report
+description: Report a reproducible bug in prisma-schema-router
+title: 'bug: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report.
+
+        **Do not report security vulnerabilities here.** Tenant-isolation bypasses, context leaks and
+        guard failures should be reported privately — see
+        [SECURITY.md](https://github.com/piyushkumar-prog/prisma-schema-router/blob/main/SECURITY.md).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of the bug.
+      placeholder: When we call router.run('acme', ...) inside a Promise.all, ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What you expected to happen instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: |
+        The smallest amount of code that reproduces the problem — ideally a failing test or a short script.
+        Issues without a reproduction are much harder to act on.
+      render: ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: stack-trace
+    attributes:
+      label: Stack trace / error output
+      description: Paste the full error output if there is one.
+      render: shell
+    validations:
+      required: false
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Affected package(s)
+      multiple: true
+      options:
+        - '@psr/core'
+        - '@psr/migrate'
+        - '@psr/provision'
+        - '@psr/governor'
+        - '@psr/testing'
+        - '@psr/otel'
+        - '@psr/adapters-express'
+        - '@psr/adapters-fastify'
+        - example app
+        - not sure
+    validations:
+      required: true
+
+  - type: input
+    id: prisma-version
+    attributes:
+      label: Prisma version
+      placeholder: '5.14.0'
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      placeholder: '20.11.1 (node --version)'
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: 'Linux 6.5 / macOS 14 / Windows 11'
+    validations:
+      required: false
+
+  - type: dropdown
+    id: pooler
+    attributes:
+      label: Connection setup
+      description: How does the application reach PostgreSQL?
+      options:
+        - Direct connection
+        - PgBouncer (transaction mode)
+        - PgBouncer (session mode)
+        - Supabase pooler
+        - AWS RDS Proxy
+        - Other (describe below)
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that might be relevant (schema-per-tenant details, tenant counts, logs).
+    validations:
+      required: false

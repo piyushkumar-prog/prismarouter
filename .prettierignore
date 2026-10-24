@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.turbo/
+coverage/
+pnpm-lock.yaml
+*.log
+*.tsbuildinfo
+.env
+.env.local
+.claude/

@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'release/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }} / Prisma ${{ matrix.prisma }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22']
+        prisma: ['5.10.0', '5.14.0']
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: psr_test
+          POSTGRES_PASSWORD: psr_test
+          POSTGRES_DB: psr_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U psr_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+      pgbouncer:
+        image: edoburu/pgbouncer:latest
+        env:
+          DATABASE_URL: postgres://psr_test:psr_test@postgres:5432/psr_test
+          POOL_MODE: transaction
+          MAX_CLIENT_CONN: 100
+        ports:
+          - 6432:5432
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -p 5432"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://psr_test:psr_test@localhost:5432/psr_test
+      PSR_CONTROL_URL: postgres://psr_test:psr_test@localhost:5432/psr_test
+      PGBOUNCER_URL: postgres://psr_test:psr_test@localhost:6432/psr_test
+      NODE_VERSION: ${{ matrix.node }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Prisma ${{ matrix.prisma }}
+        run: pnpm add -w @prisma/client@${{ matrix.prisma }} prisma@${{ matrix.prisma }} --save-dev
+
+      - name: Bootstrap control schema
+        run: |
+          psql $DATABASE_URL -f packages/migrate/sql/001_create_control_tables.sql
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Test (unit)
+        run: pnpm run test:run
+
+      - name: Isolation conformance suite (direct Postgres)
+        run: pnpm exec psr verify --output-json psr-verify-direct.json --output-md psr-verify-direct.md
+
+      - name: Isolation conformance suite (PgBouncer, transaction mode)
+        run: pnpm exec psr verify --database-url "$PGBOUNCER_URL" --output-json psr-verify-pooled.json --output-md psr-verify-pooled.md
+
+  lint:
+    name: Lint & format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint

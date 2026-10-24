@@ -1,0 +1,35 @@
+{
+  "name": "psr-example",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Example application demonstrating prisma-schema-router",
+  "type": "module",
+  "scripts": {
+    "dev": "node --loader ts-node/esm src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "db:bootstrap": "psql $DATABASE_URL -f ../../packages/migrate/sql/001_create_control_tables.sql",
+    "db:provision": "psr tenants provision demo --strategy replay",
+    "verify": "psr verify"
+  },
+  "dependencies": {
+    "@psr/core": "workspace:*",
+    "@psr/adapters-express": "workspace:*",
+    "@psr/governor": "workspace:*",
+    "@psr/migrate": "workspace:*",
+    "@psr/provision": "workspace:*",
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "@prisma/adapter-pg": "^5.14.0",
+    "@prisma/client": "^5.14.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "@types/pg": "^8.11.6",
+    "prisma": "^5.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "license": "MIT"
+}

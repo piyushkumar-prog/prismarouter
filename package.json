@@ -1,0 +1,58 @@
+{
+  "name": "prisma-schema-router",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Operations layer for schema-per-tenant PostgreSQL on Prisma",
+  "license": "MIT",
+  "author": "Piyush Kumar (https://github.com/piyushkumar-prog) and Shivanghi Sharma (https://github.com/shivanghi-sharma)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/piyushkumar-prog/prisma-schema-router.git"
+  },
+  "homepage": "https://github.com/piyushkumar-prog/prisma-schema-router#readme",
+  "bugs": {
+    "url": "https://github.com/piyushkumar-prog/prisma-schema-router/issues"
+  },
+  "keywords": [
+    "prisma",
+    "multi-tenant",
+    "schema-per-tenant",
+    "postgresql",
+    "postgres",
+    "saas",
+    "migrations",
+    "isolation"
+  ],
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:run": "turbo run test:run",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@psr/migrate": "workspace:*",
+    "@psr/provision": "workspace:*",
+    "@psr/testing": "workspace:*",
+    "@types/node": "^20.12.7",
+    "prettier": "^3.3.3",
+    "turbo": "^2.1.3",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}

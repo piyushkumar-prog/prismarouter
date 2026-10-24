@@ -1,0 +1,67 @@
+name: Feature request
+description: Suggest an idea or improvement for prisma-schema-router
+title: 'feat: '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve prisma-schema-router.
+
+        Please describe the **problem** you are trying to solve, not just the solution — it helps us
+        discuss the right approach before implementation work begins. Large changes (new packages,
+        new CLI commands, changes to the public API) need an issue before a PR is opened.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Describe the situation you are in and why the current behaviour is insufficient.
+      placeholder: We run 5,000 schemas and need to ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: If you have an idea of how this should work, describe it here. API sketches welcome.
+      render: ts
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds you have tried, or other designs you rejected.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - Routing / context
+        - Guard layers
+        - Client cache
+        - Fleet migrations
+        - Tenant lifecycle / provisioning
+        - Pool governor
+        - Isolation verification
+        - Observability (OTel)
+        - Adapters
+        - CLI
+        - Documentation
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contributes
+    attributes:
+      label: Contribution
+      options:
+        - label: We are willing to open a pull request for this
+          required: false

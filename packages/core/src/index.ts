@@ -31,7 +31,7 @@ export { validateSchemaName, generateSchemaName, quoteIdentifier } from './schem
 export { fromSubdomain, fromHeader, fromJwtClaim } from './resolvers.js';
 export type { TenantResolver } from './resolvers.js';
 
-// LRU Cache (exported for @psr/testing and @psr/governor)
+// LRU Cache (exported for @piyushkumar_dev/testing and @piyushkumar_dev/governor)
 export { LRUCache } from './lru-cache.js';
 export type { LRUCacheOptions } from './lru-cache.js';
 

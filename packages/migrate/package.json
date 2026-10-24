@@ -1,5 +1,5 @@
 {
-  "name": "@psr/migrate",
+  "name": "@piyushkumar_dev/migrate",
   "version": "0.1.0",
   "description": "Fleet migration engine and CLI for prisma-schema-router",
   "type": "module",
@@ -28,7 +28,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@psr/core": "workspace:*"
+    "@piyushkumar_dev/core": "workspace:*"
   },
   "peerDependencies": {
     "pg": ">=8.0.0"

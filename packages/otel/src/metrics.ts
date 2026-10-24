@@ -50,7 +50,7 @@ export class OtelMetrics implements PsrMetrics {
   private readonly contextErrorsCounter: Counter;
 
   constructor(meterProvider: MeterProvider) {
-    this.meter = meterProvider.getMeter('@psr/otel', '0.1.0');
+    this.meter = meterProvider.getMeter('@piyushkumar_dev/otel', '0.1.0');
 
     this.poolWaitHistogram = this.meter.createHistogram('psr.pool.wait_time_ms', {
       description: 'Time spent waiting for a pg pool connection (ms)',

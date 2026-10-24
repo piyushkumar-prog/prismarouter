@@ -1,6 +1,6 @@
 import type { Pool, PoolClient } from 'pg';
-import { quoteIdentifier } from '@psr/core';
-import type { TenantRegistry } from '@psr/core';
+import { quoteIdentifier } from '@piyushkumar_dev/core';
+import type { TenantRegistry } from '@piyushkumar_dev/core';
 import { MigrationRunStore } from './run-store.js';
 import { loadMigrations, latestVersion, migrationsAfter } from './migrations-dir.js';
 import type {

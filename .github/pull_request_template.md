@@ -13,7 +13,7 @@
 
 ## Packages touched
 
-<!-- e.g. @psr/core, @psr/migrate -->
+<!-- e.g. @piyushkumar_dev/core, @piyushkumar_dev/migrate -->
 
 ## Checklist
 
@@ -22,7 +22,7 @@
 - [ ] `pnpm typecheck` passes.
 - [ ] `pnpm test:run` passes.
 - [ ] We added or updated tests covering the change (or explained why not).
-- [ ] `@psr/core` remains dependency-free (no new entries under `dependencies`).
+- [ ] `@piyushkumar_dev/core` remains dependency-free (no new entries under `dependencies`).
 - [ ] Routing or guard changes: the isolation conformance suite passes (`DATABASE_URL=... psr verify`).
 - [ ] We added a Changeset (`pnpm changeset`) for user-facing changes.
 

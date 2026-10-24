@@ -42,9 +42,9 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
-    "@psr/migrate": "workspace:*",
-    "@psr/provision": "workspace:*",
-    "@psr/testing": "workspace:*",
+    "@piyushkumar_dev/migrate": "workspace:*",
+    "@piyushkumar_dev/provision": "workspace:*",
+    "@piyushkumar_dev/testing": "workspace:*",
     "@types/node": "^20.12.7",
     "prettier": "^3.3.3",
     "turbo": "^2.1.3",

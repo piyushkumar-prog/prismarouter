@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { pgRegistry } from '@psr/core';
+import { pgRegistry } from '@piyushkumar_dev/core';
 import { TenantProvisioner } from './provisioner.js';
 import type { ProvisionStrategy } from './provisioner.js';
 

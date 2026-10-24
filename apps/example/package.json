@@ -13,11 +13,11 @@
     "verify": "psr verify"
   },
   "dependencies": {
-    "@psr/core": "workspace:*",
-    "@psr/adapters-express": "workspace:*",
-    "@psr/governor": "workspace:*",
-    "@psr/migrate": "workspace:*",
-    "@psr/provision": "workspace:*",
+    "@piyushkumar_dev/core": "workspace:*",
+    "@piyushkumar_dev/adapters-express": "workspace:*",
+    "@piyushkumar_dev/governor": "workspace:*",
+    "@piyushkumar_dev/migrate": "workspace:*",
+    "@piyushkumar_dev/provision": "workspace:*",
     "express": "^4.19.2",
     "pg": "^8.11.5"
   },

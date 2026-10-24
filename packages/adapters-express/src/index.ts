@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
-import type { TenantRouter } from '@psr/core';
-import { TenantContextError, TenantStatusError, TenantNotFoundError } from '@psr/core';
+import type { TenantRouter } from '@piyushkumar_dev/core';
+import { TenantContextError, TenantStatusError, TenantNotFoundError } from '@piyushkumar_dev/core';
 
 export type TenantResolverFn = (
   req: Request,

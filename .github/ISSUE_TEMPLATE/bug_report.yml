@@ -55,14 +55,14 @@ body:
       label: Affected package(s)
       multiple: true
       options:
-        - '@psr/core'
-        - '@psr/migrate'
-        - '@psr/provision'
-        - '@psr/governor'
-        - '@psr/testing'
-        - '@psr/otel'
-        - '@psr/adapters-express'
-        - '@psr/adapters-fastify'
+        - '@piyushkumar_dev/core'
+        - '@piyushkumar_dev/migrate'
+        - '@piyushkumar_dev/provision'
+        - '@piyushkumar_dev/governor'
+        - '@piyushkumar_dev/testing'
+        - '@piyushkumar_dev/otel'
+        - '@piyushkumar_dev/adapters-express'
+        - '@piyushkumar_dev/adapters-fastify'
         - example app
         - not sure
     validations:

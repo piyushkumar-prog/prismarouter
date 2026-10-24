@@ -6,14 +6,14 @@ import type {
   HookHandlerDoneFunction,
 } from 'fastify';
 import fp from 'fastify-plugin';
-import type { TenantRouter } from '@psr/core';
+import type { TenantRouter } from '@piyushkumar_dev/core';
 import {
   TenantNotFoundError,
   TenantStatusError,
   TenantContextError,
   runWithContext,
-} from '@psr/core';
-import type { TenantContext } from '@psr/core';
+} from '@piyushkumar_dev/core';
+import type { TenantContext } from '@piyushkumar_dev/core';
 
 export type FastifyTenantResolverFn = (
   req: FastifyRequest,
@@ -176,7 +176,7 @@ const psrFastifyPluginImpl: FastifyPluginCallback<FastifyPluginOptions<unknown>>
 
 export const psrFastifyPlugin = fp(psrFastifyPluginImpl, {
   fastify: '>=4.0.0',
-  name: '@psr/adapters-fastify',
+  name: '@piyushkumar_dev/adapters-fastify',
 });
 
 /**

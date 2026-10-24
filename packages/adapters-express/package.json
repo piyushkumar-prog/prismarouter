@@ -1,5 +1,5 @@
 {
-  "name": "@psr/adapters-express",
+  "name": "@piyushkumar_dev/adapters-express",
   "version": "0.1.0",
   "description": "Express middleware adapter for prisma-schema-router",
   "type": "module",
@@ -23,7 +23,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@psr/core": "workspace:*"
+    "@piyushkumar_dev/core": "workspace:*"
   },
   "peerDependencies": {
     "express": ">=4.0.0"

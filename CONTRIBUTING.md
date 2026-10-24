@@ -95,12 +95,12 @@ pnpm test:run
 ```
 prisma-schema-router/
 ├── packages/
-│   ├── core/           @psr/core — router, context, LRU cache, guard, registry
-│   ├── migrate/        @psr/migrate — fleet migration engine + psr CLI
-│   ├── provision/      @psr/provision — tenant lifecycle
-│   ├── governor/       @psr/governor — per-tenant concurrency
-│   ├── testing/        @psr/testing — isolation conformance suite
-│   ├── otel/           @psr/otel — OpenTelemetry metrics + tracing
+│   ├── core/           @piyushkumar_dev/core — router, context, LRU cache, guard, registry
+│   ├── migrate/        @piyushkumar_dev/migrate — fleet migration engine + psr CLI
+│   ├── provision/      @piyushkumar_dev/provision — tenant lifecycle
+│   ├── governor/       @piyushkumar_dev/governor — per-tenant concurrency
+│   ├── testing/        @piyushkumar_dev/testing — isolation conformance suite
+│   ├── otel/           @piyushkumar_dev/otel — OpenTelemetry metrics + tracing
 │   ├── adapters-express/
 │   └── adapters-fastify/
 ├── apps/
@@ -134,12 +134,12 @@ Each package is independent — it has its own `tsconfig.json`, `vitest.config.t
 3. **Build** your package to check for type errors:
 
    ```bash
-   pnpm --filter @psr/<name> build
+   pnpm --filter @piyushkumar_dev/<name> build
    ```
 
 4. **Add or update tests** in `packages/<name>/src/__tests__/`. Unit tests must run with no
    database — anything that needs a real PostgreSQL belongs in the isolation conformance
-   suite (`@psr/testing`) and is exercised with `psr verify` instead.
+   suite (`@piyushkumar_dev/testing`) and is exercised with `psr verify` instead.
 
 5. **Run the full test suite** before pushing:
    ```bash
@@ -151,7 +151,7 @@ Each package is independent — it has its own `tsconfig.json`, `vitest.config.t
 - TypeScript strict mode (`strict: true`, `exactOptionalPropertyTypes: true`, `noUncheckedIndexedAccess: true`). Do not disable strict checks to make code compile.
 - All imports from within a package use `.js` extensions (required for Node16 ESM — TypeScript resolves `.js` → `.ts` at build time).
 - No circular dependencies between packages.
-- `@psr/core` must remain dependency-free (peer deps only: `pg`, `@prisma/adapter-pg`, `@prisma/client`, plus the optional `@psr/governor`). Do not add `dependencies` to its `package.json`.
+- `@piyushkumar_dev/core` must remain dependency-free (peer deps only: `pg`, `@prisma/adapter-pg`, `@prisma/client`, plus the optional `@piyushkumar_dev/governor`). Do not add `dependencies` to its `package.json`.
 - SQL identifiers must always go through `quoteIdentifier()` — never concatenate schema names directly into SQL strings.
 - Guard layers must remain fail-closed. A missing or wrong tenant context must produce an error, never a query against `public`.
 
@@ -166,7 +166,7 @@ Located in `src/__tests__/*.test.ts`. Run with:
 ```bash
 pnpm test:run
 # or for a single package:
-pnpm --filter @psr/core run test:run
+pnpm --filter @piyushkumar_dev/core run test:run
 ```
 
 The CI matrix runs `pnpm test:run` on Node 18, 20 and 22 against two Prisma versions, with a
@@ -174,7 +174,7 @@ real Postgres 16 service and PgBouncer (transaction mode) available for the step
 
 ### Isolation conformance (requires Postgres)
 
-The suite that actually needs a database is `@psr/testing`, run through the CLI:
+The suite that actually needs a database is `@piyushkumar_dev/testing`, run through the CLI:
 
 ```bash
 export DATABASE_URL="postgres://postgres:postgres@localhost:5432/psr_test"
@@ -203,7 +203,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 Types: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `perf`, `ci`.
 
-Scopes match package names without the `@psr/` prefix: `core`, `migrate`, `provision`, `governor`, `testing`, `otel`, `adapters-express`, `adapters-fastify`, `example`.
+Scopes match package names without the `@piyushkumar_dev/` prefix: `core`, `migrate`, `provision`, `governor`, `testing`, `otel`, `adapters-express`, `adapters-fastify`, `example`.
 
 Examples:
 

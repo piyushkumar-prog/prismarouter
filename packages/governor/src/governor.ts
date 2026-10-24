@@ -67,7 +67,7 @@ export class PoolGovernor {
    * statement that runs longer than `statementTimeoutMs`, so one runaway query
    * cannot pin a pooled connection and stall its tenant.
    *
-   * `@psr/core` calls this with the shared pool whenever the `governor` option
+   * `@piyushkumar_dev/core` calls this with the shared pool whenever the `governor` option
    * is supplied. A value of 0 (or less) disables the timeout.
    */
   applyStatementTimeout(pool: ConnectablePool): void {

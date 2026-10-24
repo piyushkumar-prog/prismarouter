@@ -51,7 +51,7 @@ export async function withTenantSpan<T>(
     return fn();
   }
 
-  const tracer = api.trace.getTracer('@psr/otel', '0.1.0');
+  const tracer = api.trace.getTracer('@piyushkumar_dev/otel', '0.1.0');
 
   return tracer.startActiveSpan(name, async (span) => {
     const tenantId = opts.hashTenantId ? hashId(ctx.tenantId) : ctx.tenantId;

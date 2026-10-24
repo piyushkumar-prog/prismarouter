@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Request, Response, NextFunction } from 'express';
-import type { TenantRouter } from '@psr/core';
-import { TenantNotFoundError } from '@psr/core';
+import type { TenantRouter } from '@piyushkumar_dev/core';
+import { TenantNotFoundError } from '@piyushkumar_dev/core';
 import { createExpressMiddleware, fromHeader, fromSubdomain } from '../index.js';
 
 type RouterRun = (tenantId: string, fn: () => Promise<unknown>) => Promise<unknown>;

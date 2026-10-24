@@ -6,7 +6,7 @@
  *           verify
  */
 import { Pool } from 'pg';
-import { pgRegistry } from '@psr/core';
+import { pgRegistry } from '@piyushkumar_dev/core';
 import { FleetMigrationEngine } from './engine.js';
 import { checkDrift } from './drift.js';
 import { loadMigrations } from './migrations-dir.js';
@@ -219,15 +219,15 @@ async function main(): Promise<void> {
   }
 
   if (cmd === 'tenants') {
-    // Forward to @psr/provision CLI if installed
+    // Forward to @piyushkumar_dev/provision CLI if installed
     let runProvisionCli: (args: string[]) => Promise<void>;
     try {
-      ({ runProvisionCli } = (await import('@psr/provision/cli' as string)) as {
+      ({ runProvisionCli } = (await import('@piyushkumar_dev/provision/cli' as string)) as {
         runProvisionCli: (args: string[]) => Promise<void>;
       });
     } catch {
-      console.error('[psr] `psr tenants` requires @psr/provision.');
-      console.error('Install it with: npm install @psr/provision');
+      console.error('[psr] `psr tenants` requires @piyushkumar_dev/provision.');
+      console.error('Install it with: npm install @piyushkumar_dev/provision');
       process.exit(1);
     }
     await runProvisionCli([sub ?? '', ...rest]);
@@ -237,12 +237,12 @@ async function main(): Promise<void> {
   if (cmd === 'verify') {
     let runVerifyCli: (args: string[]) => Promise<void>;
     try {
-      ({ runVerifyCli } = (await import('@psr/testing/cli' as string)) as {
+      ({ runVerifyCli } = (await import('@piyushkumar_dev/testing/cli' as string)) as {
         runVerifyCli: (args: string[]) => Promise<void>;
       });
     } catch {
-      console.error('[psr] `psr verify` requires @psr/testing.');
-      console.error('Install it with: npm install @psr/testing');
+      console.error('[psr] `psr verify` requires @piyushkumar_dev/testing.');
+      console.error('Install it with: npm install @piyushkumar_dev/testing');
       process.exit(1);
     }
     await runVerifyCli(rest);

@@ -1,6 +1,6 @@
 # prisma-schema-router
 
-[![npm version](https://img.shields.io/npm/v/@psr/core?label=%40psr%2Fcore&color=blue)](https://www.npmjs.com/package/@psr/core)
+[![npm version](https://img.shields.io/npm/v/@piyushkumar_dev/core?label=%40psr%2Fcore&color=blue)](https://www.npmjs.com/package/@piyushkumar_dev/core)
 [![CI](https://github.com/piyushkumar-prog/prisma-schema-router/actions/workflows/ci.yml/badge.svg)](https://github.com/piyushkumar-prog/prisma-schema-router/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node ≥18](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](package.json)
@@ -57,18 +57,18 @@ A shared schema with a `tenant_id` column and PostgreSQL Row Level Security is t
 ## Quick start
 
 ```bash
-npm install @psr/core @psr/migrate @psr/provision @psr/testing @psr/governor @psr/adapters-express
+npm install @piyushkumar_dev/core @piyushkumar_dev/migrate @piyushkumar_dev/provision @piyushkumar_dev/testing @piyushkumar_dev/governor @piyushkumar_dev/adapters-express
 npm install --save-peer @prisma/client @prisma/adapter-pg pg
 ```
 
-> `@psr/migrate` owns the `psr` CLI. It loads companion packages on demand, so install the
-> ones whose commands you run: `psr tenants …` needs `@psr/provision`, `psr verify` needs
-> `@psr/testing`.
+> `@piyushkumar_dev/migrate` owns the `psr` CLI. It loads companion packages on demand, so install the
+> ones whose commands you run: `psr tenants …` needs `@piyushkumar_dev/provision`, `psr verify` needs
+> `@piyushkumar_dev/testing`.
 
 ```ts
 import { Pool } from 'pg';
 import { PrismaClient } from '@prisma/client';
-import { createTenantRouter, pgRegistry, fromHeader } from '@psr/core';
+import { createTenantRouter, pgRegistry, fromHeader } from '@piyushkumar_dev/core';
 
 // One shared pool for all tenant data; one pool for the control plane.
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 20 });
@@ -96,7 +96,7 @@ const invoices = await db.invoice.findMany();
 Bootstrap the control schema once:
 
 ```bash
-psql $DATABASE_URL -f node_modules/@psr/migrate/sql/001_create_control_tables.sql
+psql $DATABASE_URL -f node_modules/@piyushkumar_dev/migrate/sql/001_create_control_tables.sql
 ```
 
 Provision your first tenant:
@@ -133,16 +133,214 @@ governor (per-tenant concurrency)          client cache (LRU) → adapter(schema
 
 ## Packages
 
-| Package                                              | Responsibility                                           |
-| ---------------------------------------------------- | -------------------------------------------------------- |
-| [`@psr/core`](packages/core)                         | Router, context, LRU client cache, guard L1–L5, registry |
-| [`@psr/migrate`](packages/migrate)                   | Fleet migration engine + `psr` CLI                       |
-| [`@psr/provision`](packages/provision)               | Tenant lifecycle: create, suspend, archive, delete       |
-| [`@psr/governor`](packages/governor)                 | Per-tenant concurrency cap and fair queue                |
-| [`@psr/testing`](packages/testing)                   | Isolation conformance suite (`psr verify`)               |
-| [`@psr/otel`](packages/otel)                         | OpenTelemetry metrics and tracing                        |
-| [`@psr/adapters-express`](packages/adapters-express) | Express `RequestHandler` middleware                      |
-| [`@psr/adapters-fastify`](packages/adapters-fastify) | Fastify plugin                                           |
+| Package                                                          | Responsibility                                           |
+| ---------------------------------------------------------------- | -------------------------------------------------------- |
+| [`@piyushkumar_dev/core`](packages/core)                         | Router, context, LRU client cache, guard L1–L5, registry |
+| [`@piyushkumar_dev/migrate`](packages/migrate)                   | Fleet migration engine + `psr` CLI                       |
+| [`@piyushkumar_dev/provision`](packages/provision)               | Tenant lifecycle: create, suspend, archive, delete       |
+| [`@piyushkumar_dev/governor`](packages/governor)                 | Per-tenant concurrency cap and fair queue                |
+| [`@piyushkumar_dev/testing`](packages/testing)                   | Isolation conformance suite (`psr verify`)               |
+| [`@piyushkumar_dev/otel`](packages/otel)                         | OpenTelemetry metrics and tracing                        |
+| [`@piyushkumar_dev/adapters-express`](packages/adapters-express) | Express `RequestHandler` middleware                      |
+| [`@piyushkumar_dev/adapters-fastify`](packages/adapters-fastify) | Fastify plugin                                           |
+
+---
+
+## End-to-End Guide: How the 8 Packages Work Together
+
+The packages are designed as modular layers of a complete multi-tenant platform. Here is the step-by-step workflow showing how all 8 packages connect in a real-world application:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 1. Bootstrap Control Plane (@piyushkumar_dev/migrate)                          │
+│    Track tenant metadata, schemas & migration runs in control DB               │
+└──────────────────────────────────────┬──────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 2. Configure Core Router (@piyushkumar_dev/core)                                │
+│    ├── Enforce Noisy-Neighbor Concurrency (@piyushkumar_dev/governor)            │
+│    └── Export Tenant Metrics & Traces (@piyushkumar_dev/otel)                   │
+└──────────────────────────────────────┬──────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 3. Resolve & Route HTTP Requests                                                │
+│    ├── Express: @piyushkumar_dev/adapters-express                               │
+│    └── Fastify: @piyushkumar_dev/adapters-fastify                               │
+└──────────────────────────────────────┬──────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 4. Provision & Onboard Tenants (@piyushkumar_dev/provision)                     │
+│    Create tenant schemas via Replay, Baseline, or Template Clone                │
+└──────────────────────────────────────┬──────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 5. Safe Fleet Migrations (@piyushkumar_dev/migrate)                             │
+│    Lint DDL, run canary schemas, and batch-deploy across all tenants             │
+└──────────────────────────────────────┬──────────────────────────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│ 6. Isolation Conformance & Audit Evidence (@piyushkumar_dev/testing)            │
+│    Run 'psr verify' in CI to prove zero cross-tenant context leaks               │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Step 1: Bootstrap the Control Plane (`@piyushkumar_dev/migrate`)
+
+The control plane database holds tenant metadata, active statuses, and migration run states. Run the bootstrap SQL once against your control DB:
+
+```bash
+psql $PSR_CONTROL_URL -f node_modules/@piyushkumar_dev/migrate/sql/001_create_control_tables.sql
+```
+
+### Step 2: Initialize Router with Governor & Telemetry (`@piyushkumar_dev/core`, `@piyushkumar_dev/governor`, `@piyushkumar_dev/otel`)
+
+Initialize `createTenantRouter`. The router integrates concurrency management and observability directly:
+
+- **`@piyushkumar_dev/core`**: Provides the `AsyncLocalStorage` execution boundary, LRU client cache, and fail-closed search path guards.
+- **`@piyushkumar_dev/governor`**: Prevents one high-traffic tenant from exhausting the shared PostgreSQL pool by enforcing per-tenant concurrency limits and a fair queue.
+- **`@piyushkumar_dev/otel`**: Automatically instruments tenant-scoped metrics (`psr.pool.wait_time_ms`, `psr.cache.hits`) and distributed tracing (`psr.tenant.id`).
+
+```ts
+import { Pool } from 'pg';
+import { PrismaClient } from '@prisma/client';
+import { createTenantRouter, pgRegistry } from '@piyushkumar_dev/core';
+import { createMetrics } from '@piyushkumar_dev/otel';
+
+const dataPool = new Pool({ connectionString: process.env.DATABASE_URL, max: 20 });
+const controlPool = new Pool({ connectionString: process.env.PSR_CONTROL_URL, max: 5 });
+
+// Initialize OpenTelemetry metrics
+await createMetrics();
+
+export const router = createTenantRouter({
+  pool: dataPool,
+  registry: pgRegistry(controlPool),
+  createClient: (adapter) => new PrismaClient({ adapter }),
+  cache: { maxClients: 200, idleTtlMs: 10 * 60_000 },
+  guard: { mode: 'strict' },
+  // Concurrency governor integration
+  governor: { perTenantConcurrency: 4, queueTimeoutMs: 5_000 },
+  minSchemaVersion: '20261001000000_initial',
+  jobSigningSecret: process.env.JOB_SIGNING_SECRET,
+});
+```
+
+### Step 3: Attach Web Framework Middleware (`@piyushkumar_dev/adapters-express` or `@piyushkumar_dev/adapters-fastify`)
+
+Resolve tenants from headers, subdomains, or JWT tokens on incoming HTTP requests:
+
+**Option A: Express (`@piyushkumar_dev/adapters-express`)**
+
+```ts
+import express from 'express';
+import { createExpressMiddleware, fromHeader } from '@piyushkumar_dev/adapters-express';
+
+const app = express();
+app.use(createExpressMiddleware(router, { resolve: fromHeader('x-tenant-id') }));
+
+app.get('/invoices', async (_req, res) => {
+  const db = router.db(); // Throws if outside tenant context
+  const invoices = await db.invoice.findMany();
+  res.json(invoices);
+});
+```
+
+**Option B: Fastify (`@piyushkumar_dev/adapters-fastify`)**
+
+```ts
+import Fastify from 'fastify';
+import { psrFastifyPlugin } from '@piyushkumar_dev/adapters-fastify';
+
+const fastify = Fastify();
+await fastify.register(psrFastifyPlugin, {
+  router,
+  resolve: (req) => req.headers['x-tenant-id'] as string,
+});
+
+fastify.get('/invoices', async (request) => {
+  return request.tenantDb.invoice.findMany();
+});
+```
+
+### Step 4: Provision & Onboard Tenants (`@piyushkumar_dev/provision`)
+
+Create and manage the lifecycle of tenant schemas (`provisioning → ready → suspended → archived → deleted`):
+
+**Via CLI:**
+
+```bash
+psr tenants provision acme_corp --strategy replay
+```
+
+**Programmatically in your signup flow:**
+
+```ts
+import { TenantProvisioner } from '@piyushkumar_dev/provision';
+
+const provisioner = new TenantProvisioner(dataPool, pgRegistry(controlPool));
+const { tenant } = await provisioner.provision({
+  slug: 'acme_corp',
+  strategy: 'replay',
+  source: './prisma/migrations',
+});
+```
+
+### Step 5: Run Fleet Migrations (`@piyushkumar_dev/migrate`)
+
+Roll out new Prisma schema changes safely across your entire tenant fleet:
+
+```bash
+# 1. Lint migration SQL for unsafe statements (e.g. non-concurrent indexes)
+psr migrate lint
+
+# 2. Plan and view pending migrations across all registered tenants
+psr migrate plan
+
+# 3. Deploy in waves with automated canary gating
+psr migrate deploy --canary 2 --concurrency 8
+```
+
+### Step 6: Background Jobs & Maintenance Sweeps (`@piyushkumar_dev/core`)
+
+Safely process asynchronous jobs with HMAC-verified tenant envelopes, or run cron sweeps:
+
+```ts
+// 1. Process asynchronous jobs (e.g., BullMQ / SQS) with verified tenant context
+const processJob = router.wrapJob(async (payload, tenantId) => {
+  const db = router.db();
+  await db.report.create({ data: payload });
+});
+
+// 2. Perform nightly maintenance across all ready tenants with bounded concurrency
+await router.forEachTenant(
+  async (tenantId) => {
+    const db = router.db();
+    await db.session.deleteMany({ where: { expiredAt: { lt: new Date() } } });
+  },
+  { concurrency: 4 },
+);
+```
+
+### Step 7: Isolation Conformance Suite & CI Auditing (`@piyushkumar_dev/testing`)
+
+Prove in CI and SOC2 / ISO compliance reviews that tenant data cannot leak across schemas:
+
+**Via CLI:**
+
+```bash
+psr verify --output-json psr-verify-report.json --output-md psr-verify-report.md
+```
+
+**In Vitest / Jest:**
+
+```ts
+import { verifyIsolation } from '@piyushkumar_dev/testing';
+
+const report = await verifyIsolation(router, pgRegistry(controlPool), dataPool);
+if (report.failed > 0) {
+  throw new Error(`Isolation verification failed: ${report.failed} probe(s) failed`);
+}
+```
 
 ---
 
@@ -200,7 +398,7 @@ Returns the `PrismaClient` for the current tenant. Throws `TenantContextError` o
 
 ### `router.raw(sql\`...\`)`
 
-Runs raw SQL inside a `BEGIN … SET LOCAL search_path = <tenant_schema> … COMMIT`. The `sql` tagged template literal from `@psr/core` handles parameterisation.
+Runs raw SQL inside a `BEGIN … SET LOCAL search_path = <tenant_schema> … COMMIT`. The `sql` tagged template literal from `@piyushkumar_dev/core` handles parameterisation.
 
 ```ts
 const result = await router.raw(sql`SELECT count(*) FROM invoices`);
@@ -212,7 +410,7 @@ Wraps a background-job handler so it runs in the correct tenant context. Extract
 
 ```ts
 // Enqueue (service A)
-import { signJobTenant } from '@psr/core';
+import { signJobTenant } from '@piyushkumar_dev/core';
 const envelope = {
   tenant: { id: tenantId, sig: signJobTenant(tenantId, process.env.JOB_SECRET!) },
   payload: { invoiceId: 'inv_123' },
@@ -256,7 +454,7 @@ Explicit control-plane access — logged, schema-neutral, passes the raw pool. U
 
 ### `router.middleware`
 
-Thin shorthands that lazy-load the adapter packages so `@psr/core` stays dependency-free.
+Thin shorthands that lazy-load the adapter packages so `@piyushkumar_dev/core` stays dependency-free.
 
 ```ts
 // Express
@@ -352,7 +550,7 @@ Probes (implemented in [verify.ts](packages/testing/src/verify.ts)):
 Programmatic API for your own test suite:
 
 ```ts
-import { verifyIsolation } from '@psr/testing';
+import { verifyIsolation } from '@piyushkumar_dev/testing';
 const report = await verifyIsolation(router, registry, pool);
 if (report.failed > 0) throw new Error('Isolation check failed');
 ```
@@ -364,8 +562,8 @@ if (report.failed > 0) throw new Error('Isolation check failed');
 ## Observability
 
 ```ts
-import { createMetrics } from '@psr/otel';
-import { withTenantSpan } from '@psr/otel';
+import { createMetrics } from '@piyushkumar_dev/otel';
+import { withTenantSpan } from '@piyushkumar_dev/otel';
 
 const metrics = await createMetrics(); // falls back to no-ops if OTel not installed
 ```
@@ -381,9 +579,9 @@ Every OTel span gets a `psr.tenant.id` attribute. Pass `{ hashTenantId: true }` 
 Bootstrap once against your control database:
 
 ```bash
-psql $PSR_CONTROL_URL -f node_modules/@psr/migrate/sql/001_create_control_tables.sql
+psql $PSR_CONTROL_URL -f node_modules/@piyushkumar_dev/migrate/sql/001_create_control_tables.sql
 # Optional: create migration and runtime roles
-psql $PSR_CONTROL_URL -f node_modules/@psr/migrate/sql/002_bootstrap.sql
+psql $PSR_CONTROL_URL -f node_modules/@piyushkumar_dev/migrate/sql/002_bootstrap.sql
 ```
 
 Tables created:

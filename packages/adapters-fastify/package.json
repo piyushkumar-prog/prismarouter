@@ -1,5 +1,5 @@
 {
-  "name": "@psr/adapters-fastify",
+  "name": "@piyushkumar_dev/adapters-fastify",
   "version": "0.1.0",
   "description": "Fastify plugin adapter for prisma-schema-router",
   "type": "module",
@@ -23,7 +23,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@psr/core": "workspace:*",
+    "@piyushkumar_dev/core": "workspace:*",
     "fastify-plugin": "^4.5.1"
   },
   "peerDependencies": {

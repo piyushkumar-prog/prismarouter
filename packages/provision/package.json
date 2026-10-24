@@ -1,5 +1,5 @@
 {
-  "name": "@psr/provision",
+  "name": "@piyushkumar_dev/provision",
   "version": "0.1.0",
   "description": "Tenant lifecycle: create, suspend, archive, delete",
   "type": "module",
@@ -27,8 +27,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@psr/core": "workspace:*",
-    "@psr/migrate": "workspace:*"
+    "@piyushkumar_dev/core": "workspace:*",
+    "@piyushkumar_dev/migrate": "workspace:*"
   },
   "peerDependencies": {
     "pg": ">=8.0.0"

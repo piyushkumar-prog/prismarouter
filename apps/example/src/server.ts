@@ -13,8 +13,8 @@
 import express from 'express';
 import { Pool } from 'pg';
 import { PrismaClient } from '@prisma/client';
-import { createTenantRouter, pgRegistry } from '@psr/core';
-import { createExpressMiddleware, fromHeader } from '@psr/adapters-express';
+import { createTenantRouter, pgRegistry } from '@piyushkumar_dev/core';
+import { createExpressMiddleware, fromHeader } from '@piyushkumar_dev/adapters-express';
 
 // ─── Setup pools ─────────────────────────────────────────────────────────────
 

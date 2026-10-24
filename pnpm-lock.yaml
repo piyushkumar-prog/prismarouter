@@ -11,13 +11,13 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.31.1(@types/node@20.19.43)
-      '@psr/migrate':
+      '@piyushkumar_dev/migrate':
         specifier: workspace:*
         version: link:packages/migrate
-      '@psr/provision':
+      '@piyushkumar_dev/provision':
         specifier: workspace:*
         version: link:packages/provision
-      '@psr/testing':
+      '@piyushkumar_dev/testing':
         specifier: workspace:*
         version: link:packages/testing
       '@types/node':
@@ -38,19 +38,19 @@ importers:
 
   apps/example:
     dependencies:
-      '@psr/adapters-express':
+      '@piyushkumar_dev/adapters-express':
         specifier: workspace:*
         version: link:../../packages/adapters-express
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@psr/governor':
+      '@piyushkumar_dev/governor':
         specifier: workspace:*
         version: link:../../packages/governor
-      '@psr/migrate':
+      '@piyushkumar_dev/migrate':
         specifier: workspace:*
         version: link:../../packages/migrate
-      '@psr/provision':
+      '@piyushkumar_dev/provision':
         specifier: workspace:*
         version: link:../../packages/provision
       express:
@@ -87,7 +87,7 @@ importers:
 
   packages/adapters-express:
     dependencies:
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -112,7 +112,7 @@ importers:
 
   packages/adapters-fastify:
     dependencies:
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../core
       fastify-plugin:
@@ -143,13 +143,13 @@ importers:
       '@prisma/client':
         specifier: '>=5.0.0'
         version: 5.22.0(prisma@5.22.0)
-      '@psr/governor':
-        specifier: workspace:^
-        version: link:../governor
       pg:
         specifier: '>=8.0.0'
         version: 8.23.1
     devDependencies:
+      '@piyushkumar_dev/governor':
+        specifier: workspace:*
+        version: link:../governor
       '@types/node':
         specifier: ^20.12.7
         version: 20.19.43
@@ -183,7 +183,7 @@ importers:
 
   packages/migrate:
     dependencies:
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../core
       pg:
@@ -208,7 +208,7 @@ importers:
 
   packages/otel:
     dependencies:
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -230,10 +230,10 @@ importers:
 
   packages/provision:
     dependencies:
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../core
-      '@psr/migrate':
+      '@piyushkumar_dev/migrate':
         specifier: workspace:*
         version: link:../migrate
       pg:
@@ -258,10 +258,10 @@ importers:
 
   packages/testing:
     dependencies:
-      '@psr/core':
+      '@piyushkumar_dev/core':
         specifier: workspace:*
         version: link:../core
-      '@psr/provision':
+      '@piyushkumar_dev/provision':
         specifier: workspace:*
         version: link:../provision
       pg:

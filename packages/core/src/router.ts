@@ -105,7 +105,7 @@ export interface RouterMiddleware<TClient> {
    * Create an Express `RequestHandler` that resolves the tenant and calls
    * `router.run()` for each request.
    *
-   * Requires `@psr/adapters-express` to be installed.
+   * Requires `@piyushkumar_dev/adapters-express` to be installed.
    *
    * @example
    * app.use(router.middleware.express({ resolve: fromHeader('x-tenant-id') }))
@@ -116,7 +116,7 @@ export interface RouterMiddleware<TClient> {
    * Register the Fastify plugin that resolves the tenant and calls
    * `router.run()` for each request.
    *
-   * Requires `@psr/adapters-fastify` to be installed.
+   * Requires `@piyushkumar_dev/adapters-fastify` to be installed.
    *
    * @example
    * await fastify.register(router.middleware.fastify({ resolve: fromHeader('x-tenant-id') }))
@@ -248,8 +248,8 @@ function makePoolProxy(pool: Pool): Pool {
  * Runtime-only dynamic import for optional peer packages (adapters, governor).
  *
  * The specifier is a plain `string` value rather than a string literal at the
- * import site, so TypeScript never tries to resolve `@psr/*` at compile time.
- * This keeps @psr/core dependency-light; the module is resolved at runtime and
+ * import site, so TypeScript never tries to resolve `@piyushkumar_dev/*` at compile time.
+ * This keeps @piyushkumar_dev/core dependency-light; the module is resolved at runtime and
  * the caller throws a helpful error if it is not installed.
  */
 function importOptionalModule(specifier: string): Promise<Record<string, unknown>> {
@@ -342,8 +342,8 @@ export function createTenantRouter<TClient>(
   }
 
   // ─── Optional governor (spec §6.5) ──────────────────────────────────────────
-  // Per-tenant concurrency cap with a fair queue. Loaded lazily so @psr/core
-  // does not depend on @psr/governor unless the `governor` option is provided.
+  // Per-tenant concurrency cap with a fair queue. Loaded lazily so @piyushkumar_dev/core
+  // does not depend on @piyushkumar_dev/governor unless the `governor` option is provided.
   interface GovernorLike {
     run<T>(tenantId: string, fn: () => Promise<T>): Promise<T>;
     /** Installs the server-side statement timeout on every new pooled connection. */
@@ -355,19 +355,19 @@ export function createTenantRouter<TClient>(
   function getGovernor(): Promise<GovernorLike> | null {
     if (!governorOpts) return null;
     if (!governorPromise) {
-      governorPromise = importOptionalModule('@psr/governor')
+      governorPromise = importOptionalModule('@piyushkumar_dev/governor')
         .then((mod) => {
           const PoolGovernor = mod['PoolGovernor'] as
             (new (opts: RouterGovernorOptions) => GovernorLike) | undefined;
           if (typeof PoolGovernor !== 'function') {
-            throw new Error('[psr/core] @psr/governor does not export PoolGovernor');
+            throw new Error('[psr/core] @piyushkumar_dev/governor does not export PoolGovernor');
           }
           return new PoolGovernor(governorOpts);
         })
         .catch(() => {
           throw new Error(
-            '[psr/core] The `governor` option requires @psr/governor. ' +
-              'Install it with: npm install @psr/governor',
+            '[psr/core] The `governor` option requires @piyushkumar_dev/governor. ' +
+              'Install it with: npm install @piyushkumar_dev/governor',
           );
         });
     }
@@ -526,19 +526,21 @@ export function createTenantRouter<TClient>(
 
     middleware: {
       express(opts) {
-        // Dynamically import to keep @psr/core free of adapter dependencies.
+        // Dynamically import to keep @piyushkumar_dev/core free of adapter dependencies.
         // The import() call is synchronous from the caller's perspective because
         // it returns a RequestHandler function (not a promise).
         // We return a wrapper that lazy-loads on first call.
         let _mw: unknown;
         return async function psrExpressMiddlewareLazy(req: unknown, res: unknown, next: unknown) {
           if (!_mw) {
-            const mod = (await importOptionalModule('@psr/adapters-express').catch(() => {
-              throw new Error(
-                '[psr/core] router.middleware.express() requires @psr/adapters-express. ' +
-                  'Install it with: npm install @psr/adapters-express',
-              );
-            })) as {
+            const mod = (await importOptionalModule('@piyushkumar_dev/adapters-express').catch(
+              () => {
+                throw new Error(
+                  '[psr/core] router.middleware.express() requires @piyushkumar_dev/adapters-express. ' +
+                    'Install it with: npm install @piyushkumar_dev/adapters-express',
+                );
+              },
+            )) as {
               createExpressMiddleware: (
                 r: TenantRouter<TClient>,
                 o: typeof opts,
@@ -561,10 +563,10 @@ export function createTenantRouter<TClient>(
           _options: unknown,
           done: unknown,
         ) {
-          const mod = (await importOptionalModule('@psr/adapters-fastify').catch(() => {
+          const mod = (await importOptionalModule('@piyushkumar_dev/adapters-fastify').catch(() => {
             throw new Error(
-              '[psr/core] router.middleware.fastify() requires @psr/adapters-fastify. ' +
-                'Install it with: npm install @psr/adapters-fastify',
+              '[psr/core] router.middleware.fastify() requires @piyushkumar_dev/adapters-fastify. ' +
+                'Install it with: npm install @piyushkumar_dev/adapters-fastify',
             );
           })) as { psrFastifyPlugin: (f: unknown, o: unknown, d: unknown) => void };
           mod.psrFastifyPlugin(fastify, { router, ...opts }, done);

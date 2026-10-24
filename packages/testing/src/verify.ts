@@ -9,7 +9,7 @@ import {
   type TenantRecord,
   type TenantRegistry,
   type TenantRouter,
-} from '@psr/core';
+} from '@piyushkumar_dev/core';
 import type { ProbeResult, VerifyOptions, VerifyReport } from './types.js';
 
 type AnyRouter = TenantRouter<unknown>;

@@ -1,5 +1,5 @@
 {
-  "name": "@psr/governor",
+  "name": "@piyushkumar_dev/governor",
   "version": "0.1.0",
   "description": "Per-tenant concurrency cap and fair queueing",
   "type": "module",

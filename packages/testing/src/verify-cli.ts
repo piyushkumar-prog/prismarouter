@@ -1,6 +1,6 @@
 import { writeFile } from 'node:fs/promises';
 import { Pool } from 'pg';
-import { MemoryTenantRegistry, pgRegistry, createTenantRouter } from '@psr/core';
+import { MemoryTenantRegistry, pgRegistry, createTenantRouter } from '@piyushkumar_dev/core';
 import { verifyIsolation, formatMarkdownReport } from './verify.js';
 
 export async function runVerifyCli(args: string[]): Promise<void> {

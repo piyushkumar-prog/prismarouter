@@ -1,5 +1,5 @@
 {
-  "name": "@psr/core",
+  "name": "@piyushkumar_dev/core",
   "version": "0.1.0",
   "description": "Router, context, client cache, guard, registry interface",
   "type": "module",
@@ -26,15 +26,16 @@
   "peerDependencies": {
     "@prisma/adapter-pg": ">=5.0.0",
     "@prisma/client": ">=5.0.0",
-    "@psr/governor": "workspace:^",
+    "@piyushkumar_dev/governor": "workspace:^",
     "pg": ">=8.0.0"
   },
   "peerDependenciesMeta": {
-    "@psr/governor": {
+    "@piyushkumar_dev/governor": {
       "optional": true
     }
   },
   "devDependencies": {
+    "@piyushkumar_dev/governor": "workspace:*",
     "@types/node": "^20.12.7",
     "@types/pg": "^8.11.6",
     "rimraf": "^5.0.5",

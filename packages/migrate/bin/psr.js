@@ -4,7 +4,7 @@
 import('../dist/cli.js').catch((err) => {
   if (err?.code === 'ERR_MODULE_NOT_FOUND' || err?.code === 'MODULE_NOT_FOUND') {
     console.error(
-      '[psr] Package not built yet. Run `pnpm --filter @psr/migrate build` first.\n' +
+      '[psr] Package not built yet. Run `pnpm --filter @piyushkumar_dev/migrate build` first.\n' +
         'In the monorepo: `pnpm run build`',
     );
     process.exit(1);

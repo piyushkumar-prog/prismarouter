@@ -1,5 +1,5 @@
 {
-  "name": "@psr/testing",
+  "name": "@piyushkumar_dev/testing",
   "version": "0.1.0",
   "description": "Isolation conformance suite and ephemeral tenant helpers",
   "type": "module",
@@ -27,8 +27,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@psr/core": "workspace:*",
-    "@psr/provision": "workspace:*"
+    "@piyushkumar_dev/core": "workspace:*",
+    "@piyushkumar_dev/provision": "workspace:*"
   },
   "peerDependencies": {
     "pg": ">=8.0.0"

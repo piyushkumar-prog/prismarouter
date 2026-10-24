@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import Fastify from 'fastify';
-import type { TenantRouter } from '@psr/core';
+import type { TenantRouter } from '@piyushkumar_dev/core';
 import { psrFastifyPlugin, fromHeader, fromSubdomain } from '../index.js';
 
 /** Build a stub router whose run() simply invokes the callback. */

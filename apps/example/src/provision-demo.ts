@@ -4,8 +4,8 @@
  */
 
 import { Pool } from 'pg';
-import { pgRegistry } from '@psr/core';
-import { TenantProvisioner } from '@psr/provision';
+import { pgRegistry } from '@piyushkumar_dev/core';
+import { TenantProvisioner } from '@piyushkumar_dev/provision';
 
 const DATABASE_URL = process.env['DATABASE_URL'];
 const PSR_CONTROL_URL = process.env['PSR_CONTROL_URL'] ?? DATABASE_URL;

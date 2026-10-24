@@ -1,5 +1,5 @@
 {
-  "name": "@psr/otel",
+  "name": "@piyushkumar_dev/otel",
   "version": "0.1.0",
   "description": "OpenTelemetry metrics and tracing for prisma-schema-router",
   "type": "module",
@@ -23,7 +23,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@psr/core": "workspace:*"
+    "@piyushkumar_dev/core": "workspace:*"
   },
   "peerDependencies": {
     "@opentelemetry/api": ">=1.7.0"

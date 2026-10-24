@@ -6,9 +6,9 @@ import {
   validateSchemaName,
   type TenantRegistry,
   type TenantRecord,
-} from '@psr/core';
-import type { DriftReport } from '@psr/migrate';
-import { checkDrift, loadMigrations } from '@psr/migrate';
+} from '@piyushkumar_dev/core';
+import type { DriftReport } from '@piyushkumar_dev/migrate';
+import { checkDrift, loadMigrations } from '@piyushkumar_dev/migrate';
 
 export type ProvisionStrategy = 'replay' | 'baseline' | 'clone-template';
 

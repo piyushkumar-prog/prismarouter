@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { Pool } from 'pg';
-import type { TenantRegistry, TenantRecord } from '@psr/core';
+import type { TenantRegistry, TenantRecord } from '@piyushkumar_dev/core';
 import { TenantProvisioner } from '../provisioner.js';
 
 function tenantRecord(overrides: Partial<TenantRecord> = {}): TenantRecord {
